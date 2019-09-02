@@ -17,6 +17,13 @@ cat<<!
 		img {
 			width: 100%;
 		}
+		pre {
+			background-color: black;
+			color: white;
+			font-family: monospace;
+			border-radius: 10px;
+			padding: 10px;
+		}
 	</style>
 </head>
 <body>
