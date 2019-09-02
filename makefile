@@ -1,4 +1,7 @@
 all: index.html
 
 index.html: readme.md
-	./markdown2html.sh < $< > $@
+	./htmlhere.sh < $< > $@
+
+install:
+	sudo cp htmlhere.sh /usr/bin
