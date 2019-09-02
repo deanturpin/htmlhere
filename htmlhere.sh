@@ -9,8 +9,13 @@ cat<<!
 	<style>
 		body {
 			background-color: powderblue;
-			max-width: 500px;
 			font-family: sans-serif;
+			margin-top: 5%;
+			margin-left: 25%;
+			margin-right: 25%;
+		}
+		img {
+			width: 100%;
 		}
 	</style>
 </head>

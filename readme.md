@@ -108,6 +108,7 @@ install: sudo apt install graphviz
 ## Python with requests
 HTTP requests aren't available by default so you must instruct Travis CI to
 make it so using an additional "requirements" file.
+
 ```yaml
 language: python
 python: "3.6"
@@ -164,62 +165,3 @@ codebase.
 # Code coverage (gcc only, ignored by clang)
 -g --coverage
 ```
-
-# Travis CI - triggering builds using the API
-You can configure a daily cron job via the Travis settings but for more
-frequent builds set up your own cron job on a Linux web server and use the
-Travis API. Note the .org in the API URL, if you use the wrong one (.com) it
-will simply report "access denied". There's a different API key for the Pro
-account too. Update ```TOKEN```, ```USERNAME``` and ``` ```REPO``` in the
-script below (leave the "%2").
-
-```bash
-@hourly nice ~/trigger.sh
-```
-
-```bash
-#!/bin/bash
-
-body=$(cat <<!
-{
-  "request": {
-    "branch":"master",
-    "message":"cron $(date)"
-  }
-}
-!
-)
-
-curl -s -X POST \
-  -H "Content-Type: application/json" \
-  -H "Accept: application/json" \
-  -H "Travis-API-Version: 3" \
-  -H "Authorization: token TOKEN" \
-  -d "$body" \
-  "https://api.travis-ci.org/repo/USERNAME%2FREPO/requests" >& /dev/null
-```
-
-# Clang format on pre-commit
-I use a global git configuration that runs clang-format on all C++ files as
-they are pushed to the server. See
-[githooks](https://github.com/deanturpin/githooks). I've changed my mind about
-coding standards many times over the years, next time I can just create a new
-format configuration and run it over my code. This also avoids you having to
-spend time pondering how to format bracket-heavy features like lambdas and
-initialiser lists.
-
-```bash
-for file in $(git diff-index --cached --name-only HEAD); do
-  if [[ $file == *.cpp || $file == *.h ]]; then
-    clang-format -i "$file"
-    git add "$file"
-  fi
-done
-```
-
-# Uptime monitoring
-See [uptime robot](https://stats.uptimerobot.com/V7YEVs8gv).
-
-# References
-* [Travis CI C++ instructions](https://docs.travis-ci.com/user/languages/cpp/)
-* [arne-mertz.de continuous integration](https://arne-mertz.de/2017/04/continuous-integration-travis-ci/)

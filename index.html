@@ -4,8 +4,13 @@
 	<style>
 		body {
 			background-color: powderblue;
-			max-width: 500px;
 			font-family: sans-serif;
+			margin-top: 5%;
+			margin-left: 25%;
+			margin-right: 25%;
+		}
+		img {
+			width: 100%;
 		}
 	</style>
 </head>
@@ -120,6 +125,7 @@ install: sudo apt install graphviz
 <h2>Python with requests</h2>
 HTTP requests aren't available by default so you must instruct Travis CI to
 make it so using an additional "requirements" file.
+
 <pre>
 language: python
 python: "3.6"
@@ -172,59 +178,6 @@ codebase.
 <h1>Code coverage (gcc only, ignored by clang)</h1>
 -g --coverage
 <pre>
-
-<h1>Travis CI - triggering builds using the API</h1>
-You can configure a daily cron job via the Travis settings but for more
-frequent builds set up your own cron job on a Linux web server and use the
-Travis API. Note the .org in the API URL, if you use the wrong one (.com) it
-will simply report "access denied". There's a different API key for the Pro
-<pre>
-script below (leave the "%2").
-
-<pre>
-@hourly nice ~/trigger.sh
-<pre>
-
-<pre>
-<h1>!/bin/bash</h1>
-
-body=$(cat <<!
-{
-"request": {
-"branch":"master",
-"message":"cron $(date)"
-}
-}
-!
-)
-
-curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token TOKEN" -d "$body" "https://api.travis-ci.org/repo/USERNAME%2FREPO/requests" >& /dev/null
-<pre>
-
-<h1>Clang format on pre-commit</h1>
-I use a global git configuration that runs clang-format on all C++ files as
-they are pushed to the server. See
-[githooks](https://github.com/deanturpin/githooks). I've changed my mind about
-coding standards many times over the years, next time I can just create a new
-format configuration and run it over my code. This also avoids you having to
-spend time pondering how to format bracket-heavy features like lambdas and
-initialiser lists.
-
-<pre>
-for file in $(git diff-index --cached --name-only HEAD); do
-if [[ $file == *.cpp || $file == *.h ]]; then
-clang-format -i "$file"
-git add "$file"
-fi
-done
-<pre>
-
-<h1>Uptime monitoring</h1>
-See [uptime robot](https://stats.uptimerobot.com/V7YEVs8gv).
-
-<h1>References</h1>
-branch_merge.png code_coverage_merge_report.png htmlhere.sh index.html makefile readme.md [Travis CI C++ instructions](https://docs.travis-ci.com/user/languages/cpp/)
-branch_merge.png code_coverage_merge_report.png htmlhere.sh index.html makefile readme.md [arne-mertz.de continuous integration](https://arne-mertz.de/2017/04/continuous-integration-travis-ci/)
 </body>
 </html>
-<!-- Mon  2 Sep 19:48:30 BST 2019 -->
+<!-- Mon  2 Sep 20:07:58 BST 2019 -->
