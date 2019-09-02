@@ -22,22 +22,12 @@ cat<<!
 <body>
 !
 
+openpre=0
+
 while read line; do
 
-	openpre=0
+	if [[ $line =~ ^\`\`\` ]]; then
 
-	# Let's sub some HTML
-	if [[ $line =~ ^\#\ *([^\#]+) ]]; then
-		echo "<h1>${BASH_REMATCH[1]}</h1>"
-	elif [[ $line =~ ^\#\#\ *([^\#]+) ]]; then
-		echo "<h2>${BASH_REMATCH[1]}</h2>"
-	elif [[ $line =~ ^\#\#\#\ *([^\#]+) ]]; then
-		echo "<h3>${BASH_REMATCH[1]}</h3>"
-	elif [[ $line =~ ^\#\#\#\#\ *([^\#]+) ]]; then
-		echo "<h4>${BASH_REMATCH[1]}</h4>"
-	elif [[ $line =~ \!\[\]\((.*)\) ]]; then
-		echo "<img src=\"${BASH_REMATCH[1]}\" />"
-	elif [[ $line =~ '```' ]]; then
 		if [[ $openpre == 0 ]]; then
 			openpre=1
 			echo "<pre>"
@@ -45,6 +35,22 @@ while read line; do
 			openpre=0
 			echo "</pre>"
 		fi
+
+	elif [[ $openpre == 0 ]]; then
+
+		# Let's sub some HTML
+		if [[ $line =~ ^\#\ *([^\#]+) ]]; then
+			echo "<h1>${BASH_REMATCH[1]}</h1>"
+		elif [[ $line =~ ^\#\#\ *([^\#]+) ]]; then
+			echo "<h2>${BASH_REMATCH[1]}</h2>"
+		elif [[ $line =~ ^\#\#\#\ *([^\#]+) ]]; then
+			echo "<h3>${BASH_REMATCH[1]}</h3>"
+		elif [[ $line =~ ^\#\#\#\#\ *([^\#]+) ]]; then
+			echo "<h4>${BASH_REMATCH[1]}</h4>"
+		elif [[ $line =~ \!\[\]\((.*)\) ]]; then
+			echo "<img src=\"${BASH_REMATCH[1]}\" />"
+		fi
+
 	else
 		echo $line
 	fi
