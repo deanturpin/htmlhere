@@ -12,6 +12,12 @@ while read line; do
 		echo "<h1>${BASH_REMATCH[1]}</h1>"
 	elif [[ $line =~ ^\#\#\ *([^\#]+) ]]; then
 		echo "<h2>${BASH_REMATCH[1]}</h2>"
+	elif [[ $line =~ ^\#\#\#\ *([^\#]+) ]]; then
+		echo "<h3>${BASH_REMATCH[1]}</h3>"
+	elif [[ $line =~ ^\#\#\#\#\ *([^\#]+) ]]; then
+		echo "<h4>${BASH_REMATCH[1]}</h4>"
+	elif [[ $line =~ \!\[\]\((.*)\) ]]; then
+		echo "<img src=\"${BASH_REMATCH[1]}\" />"
 	elif [[ $line =~ '```' ]]; then
 		if [[ $openpre == 0 ]]; then
 			openpre=1

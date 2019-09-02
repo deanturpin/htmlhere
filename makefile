@@ -1,6 +1,6 @@
 all: index.html
 
-index.html:
+index.html: readme.md
 	./htmlhere.sh
 
 install:
