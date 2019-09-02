@@ -1,7 +1,21 @@
 #!/bin/bash
 
 readonly in=readme.md
-readonly out=index.html
+
+cat<<!
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			background-color: powderblue;
+			max-width: 500px;
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body>
+!
 
 while read line; do
 
@@ -29,4 +43,10 @@ while read line; do
 	else
 		echo $line
 	fi
-done < $in > $out
+done < $in
+
+cat<<!
+</body>
+</html>
+<!-- $(date) -->
+!
