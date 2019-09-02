@@ -1,5 +1,8 @@
 #!/bin/bash
 
+readonly in=readme.md
+readonly out=index.html
+
 while read line; do
 
 	openpre=0
@@ -20,4 +23,4 @@ while read line; do
 	else
 		echo $line
 	fi
-done
+done < $in > $out
