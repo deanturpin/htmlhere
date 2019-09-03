@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly in=readme.md
+[[ $1 ]] && readonly in=$1 || readonly in=readme.md
 
 cat<<!
 <!DOCTYPE html>
@@ -63,7 +63,11 @@ while read line; do
 
 		# Link to other doc
 		elif [[ $line =~ ^(.*)\[(.*)\]\((.*)\)(.*) ]]; then
-			target=${BASH_REMATCH[3]/md/html}
+
+			# Create HTML for linked docs
+			src=${BASH_REMATCH[3]}
+			target=${src/md/html}
+			[[ $src =~ \.md ]] && ./htmlhere.sh $src > $target
 			echo "${BASH_REMATCH[1]}<a href='$target'>${BASH_REMATCH[2]}</a>${BASH_REMATCH[4]}"
 		fi
 
