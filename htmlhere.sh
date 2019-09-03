@@ -63,7 +63,8 @@ while read line; do
 
 		# Link to other doc
 		elif [[ $line =~ ^(.*)\[(.*)\]\((.*)\)(.*) ]]; then
-			echo "${BASH_REMATCH[1]}<a href='${BASH_REMATCH[3]}'>${BASH_REMATCH[2]}</a>${BASH_REMATCH[4]}"
+			target=${BASH_REMATCH[3]/md/html}
+			echo "${BASH_REMATCH[1]}<a href='$target'>${BASH_REMATCH[2]}</a>${BASH_REMATCH[4]}"
 		fi
 
 	# Otherwise just print the line
