@@ -1,36 +1,20 @@
 #!/bin/bash
 
+# Get file from command line if supplied
 [[ $1 ]] && readonly in=$1 || readonly in=readme.md
 
+# HTML header
 cat<<!
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-		body {
-			background-color: powderblue;
-			font-family: sans-serif;
-			margin-top: 5%;
-			margin-left: 25%;
-			margin-right: 25%;
-		}
-		img {
-			width: 100%;
-		}
-		pre {
-			background-color: black;
-			color: white;
-			font-family: monospace;
-			border-radius: 10px;
-			padding: 10px;
-		}
-	</style>
+<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
 !
 
+# Process markdown line by line
 openpre=0
-
 while read line; do
 
 	# Look for pre tags
