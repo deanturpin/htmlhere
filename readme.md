@@ -1,3 +1,5 @@
+This is [a link](info.md) to another document.
+
 # Travis CI - repo configuration
 Create an account with your GitHub login and enable a repo to get started.
 (Travis Pro appears to enable new repos by default.)
