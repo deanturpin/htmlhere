@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Get file from command line if supplied
-[[ $1 ]] && readonly in=$1 || readonly in=readme.md
-
 # HTML header
 cat<<!
 <!DOCTYPE html>
@@ -46,12 +43,11 @@ while read line; do
 			echo "<img src=\"${BASH_REMATCH[1]}\" />"
 
 		# Link to other doc
-		elif [[ $line =~ ^(.*)\[(.*)\]\((.*)\)(.*) ]]; then
+		elif [[ $line =~ (.*)\[(.*)\]\((.*)\)(.*) ]]; then
 
 			# Create HTML for linked docs
 			src=${BASH_REMATCH[3]}
 			target=${src/md/html}
-			[[ $src =~ \.md ]] && ./htmlhere.sh $src > $target
 			echo "${BASH_REMATCH[1]}<a href='$target'>${BASH_REMATCH[2]}</a>${BASH_REMATCH[4]}"
 		fi
 
@@ -59,10 +55,9 @@ while read line; do
 	else
 		echo $line
 	fi
-done < $in
+done
 
 cat<<!
 </body>
 </html>
-<!-- $(date) -->
 !

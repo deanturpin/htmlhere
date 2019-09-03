@@ -1,10 +1,14 @@
-all: index.html
+markdown := $(wildcard *.md)
+html = $(markdown:%.md=%.html)
 
-index.html: readme.md
-	./htmlhere.sh > $@
+all: $(html)
+	@echo $(html)
+
+%.html: %.md
+	./htmlhere.sh < $< > $@
 
 install:
 	sudo cp htmlhere.sh /usr/bin
 
-fox: index.html
-	firefox $<
+fox: all
+	firefox index.html
